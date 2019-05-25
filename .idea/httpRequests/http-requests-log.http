@@ -1,3 +1,75 @@
+GET http://localhost:8080/users/3
+
+###
+
+GET http://localhost:8080/users/1
+
+<> 2019-05-25T035827.200.json
+
+###
+
+POST http://localhost:8080/users
+Content-Type: application/json
+
+{
+  "name": "Homer Simpson",
+  "email": "homer@gmail.com"
+
+}
+
+<> 2019-05-25T035821.200.json
+
+###
+
+POST http://localhost:8080/users
+Content-Type: application/json
+
+{
+  "name": "Homer Simpson",
+  "email": "homer@gmail.com"
+
+}
+
+<> 2019-05-25T035818.200.json
+
+###
+
+GET http://localhost:8080/users/1
+
+###
+
+GET http://localhost:8080/users/1
+
+<> 2019-05-25T035429.500.json
+
+###
+
+POST http://localhost:8080/users
+Content-Type: application/json
+
+{
+  "name": "Homer Simpson",
+  "email": "homer@gmail.com"
+
+}
+
+<> 2019-05-25T035412.200.json
+
+###
+
+POST http://localhost:8080/users
+Content-Type: application/json
+
+{
+  "name": "Homer Simpson",
+  "email": "homer@gmail.com"
+
+}
+
+<> 2019-05-25T035355.200.json
+
+###
+
 GET http://localhost:8080/users/1
 
 <> 2019-05-25T032026.200.json
@@ -307,19 +379,6 @@ Content-Type: application/json
 GET http://localhost:8080/users/1
 
 <> 2019-05-25T023008.500.json
-
-###
-
-POST http://localhost:8080/users
-Content-Type: application/json
-
-{
-  "id": 1,
-  "name": 1,
-  "email": "user@gmail.com"
-}
-
-<> 2019-05-25T022948.200.json
 
 ###
 
