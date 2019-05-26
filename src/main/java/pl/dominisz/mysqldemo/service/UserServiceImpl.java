@@ -2,10 +2,16 @@ package pl.dominisz.mysqldemo.service;
 
 import org.springframework.stereotype.Service;
 import pl.dominisz.mysqldemo.dto.CreateUserDto;
+import pl.dominisz.mysqldemo.dto.PasswordDto;
 import pl.dominisz.mysqldemo.dto.UserDto;
+import pl.dominisz.mysqldemo.exception.InvalidPasswordException;
+import pl.dominisz.mysqldemo.exception.UserNotFoundException;
+import pl.dominisz.mysqldemo.model.Password;
 import pl.dominisz.mysqldemo.model.User;
 import pl.dominisz.mysqldemo.repository.UserRepository;
 
+
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -52,6 +58,50 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserDto> findAll() {
         return userRepository.findAll().stream().map(user -> toUserDto(user)).collect(Collectors.toList());
+
+    }
+
+    @Override
+    public void addPassword(Integer userId, PasswordDto passwordDto) {
+        //znajdz użytkownika o userID
+        //jeśli nie istniej to wyrzuc wyjątek 404
+
+
+        //Sprawdzic!!
+//        Optional<User> optionalUser = userRepository.findById(userId).
+//                orElseThrow( UserNotFoundException(userId));
+
+        Optional<User> optionalUser = userRepository.findById(userId);
+        if (!optionalUser.isPresent()) {
+            throw new UserNotFoundException(userId);
+        }
+
+        //porównaj ostatnich 5 haseł
+
+        //jeśli jest takie samo to wyrzuc wjątek
+        if (!validPassword(optionalUser.get().getPasswords(), passwordDto.getPassword())) {
+            throw new InvalidPasswordException();
+        }
+
+        //zapis do bazy
+
+        Password password = new Password();
+        password.setValue(passwordDto.getPassword());
+        password.setCreationDate(LocalDateTime.now());
+        password.setUser(optionalUser.get());
+
+        optionalUser.get().getPasswords().add(password);
+        userRepository.save(optionalUser.get());
+    }
+
+    private boolean validPassword(List<Password> passwords, String password) {
+        List<Password> lastFivePasswords = passwords.stream()
+                .sorted((password1, password2) -> password2.getCreationDate()
+                        .compareTo(password1.getCreationDate()))
+                .limit(5)
+                .collect(Collectors.toList());
+
+        return lastFivePasswords.stream().noneMatch(password1 -> password1.getValue().equals(password));
 
     }
 }

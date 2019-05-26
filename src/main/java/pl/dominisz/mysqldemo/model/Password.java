@@ -24,6 +24,7 @@ public class Password {
     User user;
 
     LocalDateTime creationDate;
+
     private String value;
 
 }

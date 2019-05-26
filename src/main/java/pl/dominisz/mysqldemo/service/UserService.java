@@ -1,6 +1,7 @@
 package pl.dominisz.mysqldemo.service;
 
 import pl.dominisz.mysqldemo.dto.CreateUserDto;
+import pl.dominisz.mysqldemo.dto.PasswordDto;
 import pl.dominisz.mysqldemo.dto.UserDto;
 
 import java.util.List;
@@ -13,4 +14,5 @@ public interface UserService {
 
     List<UserDto> findAll();
 
+    void addPassword(Integer userId, PasswordDto passwordDto);
 }

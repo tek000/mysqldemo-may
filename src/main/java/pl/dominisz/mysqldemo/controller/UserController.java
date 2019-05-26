@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.dominisz.mysqldemo.dto.CreateUserDto;
+import pl.dominisz.mysqldemo.dto.PasswordDto;
 import pl.dominisz.mysqldemo.dto.UserDto;
 import pl.dominisz.mysqldemo.model.User;
 import pl.dominisz.mysqldemo.repository.UserRepository;
@@ -34,6 +35,11 @@ public class UserController {
     @GetMapping("/users")
     public List<UserDto> findAll() {
         return userService.findAll();
+    }
+
+    @PostMapping("/users/{userId}/passwords")
+    public void addPassword (@PathVariable Integer userId,@RequestBody PasswordDto passwordDto){
+        userService.addPassword(userId, passwordDto);
     }
 
 }
